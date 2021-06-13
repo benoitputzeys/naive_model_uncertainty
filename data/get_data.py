@@ -47,30 +47,41 @@ def get_processed_data(raw_load):
             load_GB_processed[i] = load_GB_processed[i - 1]
             counter += 1
 
-    # Show how many SPs were changed with respect to the initial data.
-    percentage = counter / len(raw_load) * 100
-    print("The number of processed SPs is", counter, "which corresponds to", round(percentage, 2),
-          "% of the initial dataset.")
-
     # In case of duplicates, delete them.
     load_GB_processed = load_GB_processed.loc[~load_GB_processed.index.duplicated(keep='first')]
 
     # For long periods, use loads from previous week
     load_GB_processed[60894:60896] = raw_load[60894 - 48 * 7:60896 - 48 * 7]
+    counter += 60896 - 60894
+
     load_GB_processed[60397:60423] = raw_load[60397 - 48 * 7:60423 - 48 * 7]
+    counter += abs(60423 - 60397)
+
     load_GB_processed[62431:62439] = raw_load[62431 - 48 * 7:62439 - 48 * 7]
+    counter += abs(62439 - 62431)
+
     load_GB_processed[62382:62391] = raw_load[62382 - 48 * 7:62391 - 48 * 7]
+    counter += abs(62391 - 62382)
+
     load_GB_processed[56370:56372] = raw_load[56370 - 48 * 7:56372 - 48 * 7]
+    counter += abs(56372 - 56370)
+
     load_GB_processed[51772:51784] = raw_load[51772 - 48 * 7:51784 - 48 * 7]
+    counter += abs(51784 - 51772)
+
     load_GB_processed[59273:59280] = raw_load[59273 - 48 * 7:59280 - 48 * 7]
+    counter += abs(59280 - 59273)
+
     load_GB_processed[56272:56274] = raw_load[56272 - 48 * 7:56274 - 48 * 7]
+    counter += abs(56274 - 56272)
+
     load_GB_processed[56738:56739] = raw_load[56738 - 48 * 7:56739 - 48 * 7]
+    counter += abs(56739 - 56738)
 
-    # Create a csv file and save the load in it.
-    Path('data_preprocessing/processed_load.csv').touch()
-    load_GB_processed.to_csv("data_preprocessing/processed_load.csv")
-
-    print("Processed data successfully saved in a csv file.")
+    # Show how many SPs were changed with respect to the initial data.
+    percentage = counter / len(raw_load) * 100
+    print("The number of processed SPs is", counter, "which corresponds to", round(percentage, 2),
+          "% of the initial dataset.")
     return load_GB_processed
 
 def main():
@@ -98,6 +109,12 @@ def main():
     axs2.grid(True)
     fig2.show()
     plt.show()
+
+    # Create a csv file and save the load in it.
+    Path('data_preprocessing/processed_load.csv').touch()
+    load_GB_processed.to_csv("data_preprocessing/processed_load.csv")
+
+    print("Processed data successfully saved in a csv file.")
 
 if __name__ == '__main__':
     main()
