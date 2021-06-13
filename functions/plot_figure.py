@@ -23,7 +23,7 @@ def plot_band(X, y, ylabel, color, alpha):
 	fig, axs = plt.subplots(1, 1, figsize = (12, 6))
 	axs.fill_between(X,
 					zeros,
-					y/1000,
+					y,
 	                alpha = alpha, color = color, label = ylabel)
 	axs.set_ylabel("Electricity Load Training Set, GW", size = 14)
 	axs.grid(b = True, which = 'major'), axs.grid(b = True, which = 'minor', alpha = 0.2)
@@ -39,7 +39,6 @@ def plot_band(X, y, ylabel, color, alpha):
 	                    "00:00", " "])
 	axs.minorticks_on()
 	axs.set_axisbelow(True)
-	axs.set_ylim([0, 6])
 	plt.show()
 
 def plot_superposed_band(dates, y_1, y_2, ylabel_1, ylabel_2, color_train, color_test, alpha):
@@ -48,11 +47,11 @@ def plot_superposed_band(dates, y_1, y_2, ylabel_1, ylabel_2, color_train, color
 	fig, axs = plt.subplots(1, 1, figsize = (12, 6))
 	axs.fill_between(dates,
 					zeros,
-					y_1 / 1000,
+					y_1,
 	                alpha = alpha, color = color_train, label = ylabel_1)
 	axs.fill_between(dates,
 	                 zeros,
-	                 y_2 / 1000,
+	                 y_2,
 	                 alpha = alpha, color = color_test, label = ylabel_2)
 	axs.set_ylabel("Electricity Load Training Set, GW", size = 14)
 	axs.grid(b = True, which = 'major'), axs.grid(b = True, which = 'minor', alpha = 0.2)
@@ -68,7 +67,6 @@ def plot_superposed_band(dates, y_1, y_2, ylabel_1, ylabel_2, color_train, color
 	                    "00:00", " "])
 	axs.minorticks_on()
 	axs.set_axisbelow(True)
-	axs.set_ylim([0, 6])
 	plt.show()
 
 def plot_band_w_mean(X, y, mean, ylabel, color, alpha):
