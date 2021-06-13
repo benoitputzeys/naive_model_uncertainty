@@ -30,7 +30,11 @@ X["Predicted_load"] = shift_load.values
 X["Settlement Period"] = load['Timestamp'].dt.hour*2+1+load['Timestamp'].dt.minute/30
 
 # Create the final y (output) values which is the actual load.
-y = load["Load"]
+y = pd.DataFrame()
+y["Settlement Period"] = load['Timestamp'].dt.hour*2+1+load['Timestamp'].dt.minute/30
+y["Day of Week"] = load['Timestamp'].dt.weekday
+y["Predicted_load"] = load["Load"].values
+y["Settlement Period"] = load['Timestamp'].dt.hour*2+1+load['Timestamp'].dt.minute/30
 
 # Save the final input/prediction (X) and output/ground truth (y) in csv files.
 X.to_csv("X.csv")
